@@ -48,25 +48,11 @@ db.create_all()
 db.session.commit()
 
 # =================== ALL CONFIGS ABOVE THE LINE. ============================
-# Log in Parameter for Flask_Security
-@app.context_processor
-def login_context():
-    return {
-        'url_for_security': url_for_security,
-        'login_user_form': LoginForm(),
-    }
-# Registeration Form for Flask_Security
-@app.context_processor
-def register_context():
-    return {
-        'url_for_security': url_for_security,
-        'register_user_form': RegisterForm(),
-    }
 
 # Application Home Page Redirect after Login or Registration. 
 @app.route("/")
 @login_required
-def roles():
+def home():
     user = current_user.email
     passwd = current_user.password
     name = current_user.username
