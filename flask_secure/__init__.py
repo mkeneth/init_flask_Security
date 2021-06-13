@@ -1,7 +1,5 @@
-import os
 from flask import Flask, render_template, redirect, url_for, g
 from dotenv import load_dotenv
-from flask_security.forms import RegisterForm
 
 # Import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 # Flask_Security implementation module
 from flask_security import Security, SQLAlchemyUserDatastore, \
                            login_required, current_user, LoginForm, url_for_security, \
-                           RegisterForm
+                           RegisterForm, roles_required
 
 #Flask email config
 from flask_mail import Mail
@@ -30,9 +28,10 @@ mail = Mail(app)
 
 # Applications import config Modules. 
 from flask_secure.auth.models import Role, User
+from flask_secure.auth.forms import ExtendedRegisterForm
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
+security = Security(app, user_datastore, register_form=ExtendedRegisterForm)
 
 # Loop a try and except command to create default roles 
 # Catch ERROR. " sqlalchemy.exc.IntegrityError: (pymysql.err.IntegrityError) "
@@ -58,7 +57,7 @@ def login_context():
     }
 # Registeration Form for Flask_Security
 @app.context_processor
-def login_context():
+def register_context():
     return {
         'url_for_security': url_for_security,
         'register_user_form': RegisterForm(),
@@ -70,4 +69,5 @@ def login_context():
 def roles():
     user = current_user.email
     passwd = current_user.password
-    return render_template("home.html", user=user, passwd=passwd)
+    name = current_user.username
+    return render_template("home.html", user=user, passwd=passwd, username=name)
