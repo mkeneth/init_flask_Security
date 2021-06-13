@@ -102,3 +102,7 @@ form{
     border: none;
     border-radius: 12px;
 }
+
+.flashes{
+    text-align: center;
+}
