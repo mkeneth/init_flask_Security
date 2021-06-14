@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, g
+from flask import Flask, render_template, redirect, url_for
 from dotenv import load_dotenv
 
 # Import SQLAlchemy
@@ -6,8 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Flask_Security implementation module
 from flask_security import Security, SQLAlchemyUserDatastore, \
-                           login_required, current_user, LoginForm, url_for_security, \
-                           RegisterForm, roles_required
+                           login_required, current_user
 
 #Flask email config
 from flask_mail import Mail
@@ -23,7 +22,7 @@ app.debug = True
 # Define the database object which is imported
 db = SQLAlchemy(app)
 
-# Defining Flask Email parameter
+# Defining Flask Email parameter ( Not Implemented in this Application )
 mail = Mail(app)
 
 # Applications import config Modules. 

@@ -1,8 +1,7 @@
 #App Modules.
 from flask_secure import app
 # System Modules
-from flask_security import LoginForm, url_for_security, \
-                           RegisterForm, roles_required
+from flask_security import LoginForm, url_for_security, RegisterForm
 
 # Log in Parameter for Flask_Security
 @app.context_processor
