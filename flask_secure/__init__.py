@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 # Import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import exc as error
 
 # Flask_Security implementation module
 from flask_security import Security, SQLAlchemyUserDatastore, \
@@ -32,19 +33,19 @@ from flask_secure.auth.forms import ExtendedRegisterForm
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore, register_form=ExtendedRegisterForm)
 
-# Loop a try and except command to create default roles 
-# Catch ERROR. " sqlalchemy.exc.IntegrityError: (pymysql.err.IntegrityError) "
-"""
-try:
-    user_datastore.create_role(name='admin', description="Admin Right Used")
-    user_datastore.create_role(name="user", description="Normal User Roles")
-except (EnvironmentError, TypeError):
-    pass
-"""
-
 # Build the database:
 db.create_all()
 db.session.commit()
+
+# Creating the roles for the respective users in the system.
+try:
+    db.session.flush()
+    user_datastore.create_role(name='admin', description="Admin Right Used")
+    user_datastore.create_role(name="user", description="Normal User Roles")
+    db.session.commit()
+except error.IntegrityError:
+    db.session.rollback()
+
 
 # =================== ALL CONFIGS ABOVE THE LINE. ============================
 

@@ -1,5 +1,6 @@
 #App Modules.
 from flask_secure import app
+
 # System Modules
 from flask_security import LoginForm, url_for_security, RegisterForm
 
