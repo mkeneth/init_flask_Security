@@ -47,13 +47,14 @@ except error.IntegrityError:
     db.session.rollback()
 
 # Silently Query the first user and giving them admin privileges.
-# After registration has already been done. 
+# After registration has already been done.
+# Requires re-running the application twice for changes to take effect. 
 try:
     admin_user = User.query.filter_by(id=1).first()
     user_role = Role.query.filter_by(id=1).first()
     user_datastore.add_role_to_user(user=admin_user, role=user_role)
     db.session.commit()
-except ValueError:
+except AttributeError: 
     pass
 
 # Assigning user roles to all the other people who register.
