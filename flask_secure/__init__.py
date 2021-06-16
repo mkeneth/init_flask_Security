@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template
 from dotenv import load_dotenv
 
 # Import SQLAlchemy
@@ -7,7 +7,7 @@ from sqlalchemy import exc as error
 
 # Flask_Security implementation module
 from flask_security import Security, SQLAlchemyUserDatastore, \
-                           login_required, current_user
+                           login_required, current_user, roles_required, user_registered
 
 #Flask email config
 from flask_mail import Mail
@@ -46,6 +46,23 @@ try:
 except error.IntegrityError:
     db.session.rollback()
 
+# Silently Query the first user and giving them admin privileges.
+# After registration has already been done. 
+try:
+    admin_user = User.query.filter_by(id=1).first()
+    user_role = Role.query.filter_by(id=1).first()
+    user_datastore.add_role_to_user(user=admin_user, role=user_role)
+    db.session.commit()
+except ValueError:
+    pass
+
+# Assigning user roles to all the other people who register.
+@user_registered.connect_via(app)
+def _after_reg_hook(sender, user, **extra):
+    user_role = Role.query.filter_by(id=2).first()
+    user_datastore.add_role_to_user(user=user, role=user_role)
+    db.session.commit()
+    return
 
 # =================== ALL CONFIGS ABOVE THE LINE. ============================
 
@@ -53,6 +70,14 @@ except error.IntegrityError:
 @app.route("/")
 @login_required
 def home():
+    user = current_user.email
+    passwd = current_user.password
+    name = current_user.username
+    return render_template("home.html", user=user, passwd=passwd, username=name)
+
+@app.route("/admin/")
+@roles_required('admin')
+def admin():
     user = current_user.email
     passwd = current_user.password
     name = current_user.username
