@@ -16,5 +16,5 @@ With in root directory of the application create a folder ```instance``` contain
 Then copy the contents of ```example.settings.py``` and make the necessary changes in to suit the needs of your application. 
 
 ## Recommendation on Database.
-Note that the database method used here is to create the database is for test purposes only kindly refer to the [``Flask-Migrate``](https://flask-migrate.readthedocs.io/en/latest/index.html ) module for a better implementation on the database Models for large projects. 
+Note that the database method used here is to create the database is for test purposes only kindly refer to the [``Flask-Migrate``](https://flask-migrate.readthedocs.io/en/latest/index.html ) module for a better implementation on the database Models. 
 
