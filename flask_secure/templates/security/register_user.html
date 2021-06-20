@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Log In </title>
-        <link rel="stylesheet" href="/static/security/login_user.css">
+        <link rel="stylesheet" href="/static/css/login_user.css">
     </head>
     <body>
     {% with messages = get_flashed_messages() %}
@@ -22,7 +22,7 @@
             <div class="box"> 
                 <div class="container">
                     <div class="logo">
-                        <img src="/static/security/assets/user.png">
+                        <img src="/static/images/user.png">
                         <form action="{{ url_for_security('register') }}" method="POST">                       
                         {{ register_user_form.hidden_tag() }}
                         {{ register_user_form.username(placeholder=' Full Name e.g: John Smith ') }}
@@ -32,7 +32,6 @@
                         {{ register_user_form.submit }} 
                         </form>
                     </div>
-                    
                 </div>
             </div>
         </section>
