@@ -18,3 +18,7 @@ Then copy the contents of ```example.settings.py``` and make the necessary chang
 ## Recommendation on Database.
 Note that the database method used here is to create the database is for test purposes only kindly refer to the [``Flask-Migrate``](https://flask-migrate.readthedocs.io/en/latest/index.html ) module for a better implementation on the database Models. 
 
+## A sample instance 
+
+[ Heroku Instance ](https://quiet-lowlands-84688.herokuapp.com/login?next=%2F)
+Click the link above to see deployed project. 
